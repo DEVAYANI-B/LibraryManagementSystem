@@ -8,7 +8,7 @@ public class Main{
         Scanner sc=new Scanner(System.in);
         BookService bookservice=new BookServiceImpl();
         MemberService memService = new MemberServiceImpl();
-        BorrowRecordService borrowService=new BorrowRecordServiceImpl();
+        BorrowRecordService borrowservice=new BorrowRecordServiceImpl();
 while(true){
         System.out.println("\n===LIBRARY MANAGEMENT SYSTEM===");
         System.out.println("1.Book Menu");
@@ -188,53 +188,18 @@ while(true){
         }
      }
 
-     public static void BorrowMenu(BorrowRecordService service,Scanner sc){
+     public static void BorrowMenu(BorrowService service,Scanner sc){
       while(true){
         System.out.println("---Member Menu---");
-            System.out.println("1.Borrow Book");
-            System.out.println("2.Return Book");
-            System.out.println("3.View borrow records by member");
-            System.out.println("4.View all borrow records");
+            System.out.println("1.Add Member");
+            System.out.println("2.View Member By Id");
+            System.out.println(".View all Members");
+
             System.out.println("5.Back to Main Menu");
             System.out.print("Enter choice: ");
             int ch=sc.nextInt();
             sc.nextLine();
             if(ch==5)return;
-
-
-            switch(ch){
-                case 1:
-                    System.out.print("Enter member: ");
-                    String memberId=sc.nextLine();
-                    System.out.print("Enter bookId: ");
-                    String bookId=sc.nextLine();
-                    
-                    System.out.println(service.borrowBook(memberId,bookId) ? "Book Borrowed Successfully" : "Borrow Failed");
-                    break;
-                case 2:
-                     System.out.print("Enter recId: ");
-                     int recId=sc.nextInt();
-                     sc.nextLine();
-                     System.out.println(service.returnBook(recId) ? "Returned Successfully" : "Return failed");
-                     break;
-                case 3:
-                    System.out.print("Enter memberId: ");
-                    List<BorrowRecord> bc=service.getBorrowRecordsByMember(sc.nextLine());
-                    for(BorrowRecord bb: bc){
-                        System.out.println(bb.getRecId()+"\n"+bb.getMemberId()+"\n"+bb.getBookId()+"\n"+bb.getBorrowDate()+"\n"+bb.getReturnDate());
-                    }
-                    break;
-                case 4:
-                    for(BorrowRecord brr: service.getAllBorrowRecords()){
-                        System.out.println(brr.getRecId()+"\n"+brr.getMemberId()+"\n"+brr.getBookId()+"\n"+brr.getBorrowDate()+"\n"+brr.getReturnDate());
-                    }
-                    break;
-                default:
-                    System.out.println("Invalid Choice!");
-
-
-
-            }
 
       }
      }

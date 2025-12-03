@@ -10,7 +10,7 @@ public class BookServiceImpl implements BookService{
     
     @Override
     public boolean addBook(Book book){
-        String sql="INSERT INTO books(bookid,title,author,availableCopies) VALUES(?,?,?,?)";
+        String sql="INSERT INTO books(bookId,title,author,availableCopies) VALUES(?,?,?,?)";
 
         try(Connection con=DBConnection.getConnection();
         PreparedStatement ps=con.prepareStatement(sql)){
