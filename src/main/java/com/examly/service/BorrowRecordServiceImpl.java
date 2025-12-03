@@ -4,7 +4,6 @@ import java.util.List;
 import java.sql.*;
 import java.util.ArrayList;
 import main.java.com.examly.entity.*;
-import main.java.com.examly.service.*;
 import main.java.com.examly.util.DBConnection;
 
 
