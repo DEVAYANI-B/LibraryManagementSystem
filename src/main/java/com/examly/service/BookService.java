@@ -5,6 +5,7 @@ import main.java.com.examly.entity.Book;
 
 public interface BookService{
 
+boolean exists(String bookId);
 boolean addBook(Book book);
 Book getbookById(String bookId);
 List<Book> getAllBooks();

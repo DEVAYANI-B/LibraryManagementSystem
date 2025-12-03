@@ -7,9 +7,30 @@ import main.java.com.examly.util.DBConnection;
 import java.sql.*;
 
 public class BookServiceImpl implements BookService{
-    
+    @Override
+    public boolean exists(String bookId){
+        String sql="SELECT bookId FROM books WHERE bookId=?";
+        try(Connection con=DBConnection.getConnection();
+        PreparedStatement ps=con.prepareStatement(sql)){
+            ps.setString(1,bookId);
+            ResultSet rs=ps.executeQuery();
+            return rs.next();
+            }
+        
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+            
+        }
+        return false;
+
+    }
     @Override
     public boolean addBook(Book book){
+        if(exists(book.getBookId())){
+            System.out.println("Book already exists with id: " + book.getBookId());
+            return false;
+        }
         String sql="INSERT INTO books(bookId,title,author,availableCopies) VALUES(?,?,?,?)";
 
         try(Connection con=DBConnection.getConnection();
@@ -53,6 +74,7 @@ public class BookServiceImpl implements BookService{
 
     }
 
+
     @Override
     public List<Book> getAllBooks(){
         String sql="SELECT * FROM books";
@@ -81,6 +103,10 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public boolean updateBook(Book book){
+        if(!exists(book.getBookId())){
+            System.out.println("Book does not exist with id: " + book.getBookId());
+            return false;
+        }
         String sql="UPDATE books SET title=?,author=?,availableCopies=? WHERE bookId=?";
 
         try(Connection con=DBConnection.getConnection();
@@ -102,6 +128,10 @@ public class BookServiceImpl implements BookService{
     }
     @Override
     public boolean deleteBook(String bookId){
+        if(!exists(bookId())){
+            System.out.println("Book does not exist with id: " + bookId());
+            return false;
+        }
         String sql="DELETE FROM books WHERE bookId=?";
 
         try(Connection con=DBConnection.getConnection();
