@@ -1,9 +1,9 @@
-package com.examly.service;
+package main.java.com.examly.service;
 
 import java.util.List;
 import java.util.ArrayList;
-import com.examly.entity.Book;
-import com.examly.util.DBConnection;
+import main.java.com.examly.entity.Book;
+import main.java.com.examly.util.DBConnection;
 import java.sql.*;
 
 public class BookServiceImpl implements BookService{

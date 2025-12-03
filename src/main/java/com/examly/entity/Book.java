@@ -1,4 +1,4 @@
-package com.examly.entity;
+package main.java.com.examly.entity;
 
 public class Book{
     private String bookId;

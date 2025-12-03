@@ -1,12 +1,13 @@
 import java.util.*;
-import com.examly.entity.*;
-import com.examly.service.*;
+import main.java.com.examly.entity.*;
+import main.java.com.examly.service.*;
 
 
 public class Main{
     public static void main(String[] args){
         Scanner sc=new Scanner(System.in);
         BookService bookservice=new BookServiceImpl();
+        MemberService memService = new MemberServiceImpl();
 while(true){
         System.out.println("\n===LIBRARY MANAGEMENT SYSTEM===");
         System.out.println("1.Book Menu");
@@ -20,6 +21,7 @@ while(true){
 
         switch(ch){
             case 1: BookMenu(bookservice,sc); break;
+            case 2: MemberMenu(memService,sc); break;
             case 4:System.exit(0); break;
             default: System.out.println("Invalid Choice");
         }
@@ -41,7 +43,7 @@ while(true){
             System.out.println("7.Decrease available Book Copies");
             System.out.println("8.Increase available Book Copies");
             System.out.println("9.Back to Main Menu");
-            System.out.print("Enter choice");
+            System.out.print("Enter choice: ");
             int ch=sc.nextInt();
             sc.nextLine();
             if(ch==9)return;
@@ -103,6 +105,77 @@ while(true){
                     System.out.print("Enter Book ID: ");
                     System.out.println(service.increaseBookCopy(sc.nextLine()) ? "Increased" : "Failed");
                     break;
+                default:
+                    System.out.println("Invalid choice!");
+
+
+
+
+            }
+        }
+    }
+
+     public static void MemberMenu(MemberService service,Scanner sc){
+        while(true){
+            System.out.println("---Member Menu---");
+            System.out.println("1.Add Member");
+            System.out.println("2.View Member By Id");
+            System.out.println("3.View all Members");
+            System.out.println("4.Update Member by Id");
+            System.out.println("5.Delete Member by Id");
+            System.out.println("6.Search Member by name");
+            System.out.println("7.Back to Main Menu");
+            System.out.print("Enter choice: ");
+            int ch=sc.nextInt();
+            sc.nextLine();
+            if(ch==7)return;
+
+            switch(ch){
+                
+                case 1:
+                    System.out.print("Enter memberId: ");
+                    String memberId=sc.nextLine();
+                    System.out.print("Enter mname: ");
+                    String mname=sc.nextLine();
+                    System.out.print("Enter email: ");
+                    String email=sc.nextLine();
+                    
+                    Member member=new Member(memberId,mname,email);
+                    System.out.println(service.addMember(member) ? "Member added successfully" :"Failed to add Member");
+                    break;
+                case 2:
+                    System.out.print("Enter memberId: ");
+                    Member m=service.getMemberById(sc.nextLine());
+                    System.out.println(m!=null ?m.getMemberId()+"\n"+m.getMname() : "Member not found" );
+                    break;
+                case 3:
+                    for(Member mb: service.getAllMembers()){
+                        System.out.println(mb.getMemberId()+"\n"+mb.getMname());
+                    }
+                    break;
+                case 4:
+                    System.out.print("Member id to update: ");
+                    String uid=sc.nextLine();
+                    System.out.print("New mname: ");
+                    String nmname=sc.nextLine();
+                    System.out.print("New email: ");
+                    String nemail=sc.nextLine();
+                   
+                    Member updated=new Member(uid,nmname,nemail);
+                    System.out.println(service.updateMember(updated) ? "Updated" : "Failed to update");
+                    break;
+                case 5:
+                    System.out.print("Enter member id to delete: ");
+                    System.out.println(service.deleteMember(sc.nextLine()) ? "Deleted" : "Failed");
+                    break;
+                case 6:
+                    System.out.print("Enter name: ");
+                    List<Member> mbs=service.searchMemberByName(sc.nextLine());
+                    for(Member mm: mbs){
+                        System.out.println(mm.getMemberId()+"\n"+mm.getMname()+"\n"+mm.getEmail());
+                    }
+                    break;
+               
                 default:
                     System.out.println("Invalid choice!");
 

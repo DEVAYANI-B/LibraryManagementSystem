@@ -1,7 +1,7 @@
-package com.examly.service;
+package main.java.com.examly.service;
 
 import java.util.List;
-import com.examly.entity.Book;
+import main.java.com.examly.entity.Book;
 
 public interface BookService{
 
