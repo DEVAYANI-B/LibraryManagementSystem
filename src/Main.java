@@ -1,0 +1,115 @@
+import java.util.*;
+import com.examly.entity.*;
+import com.examly.service.*;
+
+
+public class Main{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        BookService bookservice=new BookServiceImpl();
+while(true){
+        System.out.println("\n===LIBRARY MANAGEMENT SYSTEM===");
+        System.out.println("1.Book Menu");
+        System.out.println("2.Member Menu");
+        System.out.println("3.BorrowRecord Menu");
+        System.out.println("4.Exit");
+        System.out.print("Enter your Choice: ");
+        int ch=sc.nextInt();
+        sc.nextLine();
+        
+
+        switch(ch){
+            case 1: BookMenu(bookservice,sc); break;
+            case 4:System.exit(0); break;
+            default: System.out.println("Invalid Choice");
+        }
+
+
+}
+
+
+    }
+    public static void BookMenu(BookService service,Scanner sc){
+        while(true){
+            System.out.println("---Book Menu---");
+            System.out.println("1.Add Book");
+            System.out.println("2.View Book By Id");
+            System.out.println("3.View all Books");
+            System.out.println("4.Update Book by Id");
+            System.out.println("5.Delete Book by Id");
+            System.out.println("6.Search Books by Title");
+            System.out.println("7.Decrease available Book Copies");
+            System.out.println("8.Increase available Book Copies");
+            System.out.println("9.Back to Main Menu");
+            System.out.print("Enter choice");
+            int ch=sc.nextInt();
+            sc.nextLine();
+            if(ch==9)return;
+
+            switch(ch){
+                
+                case 1:
+                    System.out.print("Enter bookId: ");
+                    String bookId=sc.nextLine();
+                    System.out.print("Enter title: ");
+                    String title=sc.nextLine();
+                    System.out.print("Enter author: ");
+                    String author=sc.nextLine();
+                    System.out.print("Enter availableCopies: ");
+                    int availableCopies=sc.nextInt();
+                    sc.nextLine();
+                    Book book=new Book(bookId,title,author,availableCopies);
+                    System.out.println(service.addBook(book) ? "Book added successfully" :"Failed to add book");
+                    break;
+                case 2:
+                    System.out.print("Enter bookId: ");
+                    Book b=service.getbookById(sc.nextLine());
+                    System.out.println(b!=null ?b.getBookId()+"\n"+b.getTitle() : "Book not found" );
+                    break;
+                case 3:
+                    for(Book bk: service.getAllBooks()){
+                        System.out.println(bk.getBookId()+"\n"+bk.getTitle());
+                    }
+                    break;
+                case 4:
+                    System.out.print("Book id to update: ");
+                    String uid=sc.nextLine();
+                    System.out.print("New title: ");
+                    String ntitle=sc.nextLine();
+                    System.out.print("New author: ");
+                    String nauthor=sc.nextLine();
+                    System.out.print("New available copies: ");
+                    int ncopies=sc.nextInt();
+                    sc.nextLine();
+                    Book updated=new Book(uid,ntitle,nauthor,ncopies);
+                    System.out.println(service.updateBook(updated) ? "Updated" : "Failed to update");
+                    break;
+                case 5:
+                    System.out.print("Enter bookId to delete: ");
+                    System.out.println(service.deleteBook(sc.nextLine()) ? "Deleted" : "Failed");
+                    break;
+                case 6:
+                    System.out.print("Enter title: ");
+                    List<Book> bks=service.searchBookByTitle(sc.nextLine());
+                    for(Book bo: bks){
+                        System.out.println(bo.getBookId()+"\n"+bo.getAuthor()+"\n"+bo.getAvailableCopies());
+                    }
+                    break;
+                case 7:
+                    System.out.print("Enter Book ID: ");
+                    System.out.println(service.reduceBookCopy(sc.nextLine()) ? "Decreased" : "Failed");
+                    break;
+                case 8:
+                    System.out.print("Enter Book ID: ");
+                    System.out.println(service.increaseBookCopy(sc.nextLine()) ? "Increased" : "Failed");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+
+
+
+
+            }
+        }
+    }
+}
